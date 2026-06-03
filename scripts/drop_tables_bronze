@@ -1,0 +1,109 @@
+/* ==========================================================
+   PROJECT: GlobalLink Logistics Data Warehouse
+   LAYER: Bronze
+
+   PURPOSE:
+   Remove existing Bronze tables before recreating them.
+
+   USE CASES:
+   - Development and testing
+   - Schema changes
+   - Full environment rebuild
+   - Initial warehouse deployment
+
+   NOTE:
+   This script permanently deletes all data stored
+   in the Bronze layer tables.
+   ========================================================== */
+
+
+/* ==========================================================
+   CUSTOMER TABLE
+   Stores raw customer data from source systems
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.customer;
+GO
+
+/* ==========================================================
+   DRIVER TABLE
+   Stores raw driver information
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.driver;
+GO
+
+/* ==========================================================
+   VEHICLE TABLE
+   Stores raw fleet and vehicle information
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.vehicle;
+GO
+
+/* ==========================================================
+   WAREHOUSE TABLE
+   Stores warehouse and distribution center data
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.warehouse;
+GO
+
+/* ==========================================================
+   SHIPMENT TABLE
+   Core logistics transaction table
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.shipment;
+GO
+
+/* ==========================================================
+   CLAIM TABLE
+   Stores customer claims related to shipment issues
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.claim;
+GO
+
+/* ==========================================================
+   SHIPMENT ITEM TABLE
+   Stores shipment product details
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.shipment_item;
+GO
+
+/* ==========================================================
+   INVOICE TABLE
+   Stores shipment billing information
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.invoice;
+GO
+
+/* ==========================================================
+   PAYMENT TABLE
+   Stores invoice payment transactions
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.payment;
+GO
+
+/* ==========================================================
+   RETURN ITEM TABLE
+   Stores returned shipment records
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.return_item;
+GO
+
+/* ==========================================================
+   MAINTENANCE LOG TABLE
+   Stores vehicle maintenance activities
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.maintenance_log;
+GO
+
+/* ==========================================================
+   FUEL LOG TABLE
+   Stores vehicle fuel consumption records
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.fuel_log;
+GO
+
+/* ==========================================================
+   DELIVERY EVENT TABLE
+   Stores shipment tracking and delivery events
+   ========================================================== */
+DROP TABLE IF EXISTS bronze.delivery_event;
+GO
