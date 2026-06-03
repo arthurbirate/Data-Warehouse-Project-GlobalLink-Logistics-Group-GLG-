@@ -1,0 +1,213 @@
+
+USE Globallink_DB;
+GO
+
+/* ==========================================================
+   CUSTOMER
+   Raw customer master data
+   ========================================================== */
+CREATE TABLE bronze.customer
+(
+    customer_id INT,
+    country VARCHAR(50),
+    customer_name VARCHAR(100),
+    credit_limit DECIMAL(18,2),
+    email VARCHAR(100),
+    postal_code VARCHAR(20)
+);
+GO
+
+
+/* ==========================================================
+   DRIVER
+   Raw driver information
+   ========================================================== */
+CREATE TABLE bronze.driver
+(
+    driver_id INT,
+    driver_name VARCHAR(100),
+    country VARCHAR(50),
+    licence_type VARCHAR(50)
+);
+GO
+
+
+/* ==========================================================
+   VEHICLE
+   Raw fleet information
+   ========================================================== */
+CREATE TABLE bronze.vehicle
+(
+    vehicle_id INT,
+    vehicle_number VARCHAR(50),
+    manufacturer VARCHAR(50),
+    capacity_kg INT
+);
+GO
+
+
+/* ==========================================================
+   WAREHOUSE
+   Raw warehouse information
+   ========================================================== */
+CREATE TABLE bronze.warehouse
+(
+    warehouse_id INT,
+    warehouse_name VARCHAR(100),
+    country VARCHAR(50),
+    manager_name VARCHAR(100)
+);
+GO
+
+
+/* ==========================================================
+   SHIPMENT
+   Core operational shipment records
+   ========================================================== */
+CREATE TABLE bronze.shipment
+(
+    shipment_id INT,
+    tracking_number VARCHAR(50),
+    customer_id INT,
+    warehouse_id INT,
+    driver_id INT,
+    vehicle_id INT,
+    weight_kg DECIMAL(18,2),
+    shipment_status VARCHAR(50),
+    shipment_date VARCHAR(50)
+);
+GO
+
+
+/* ==========================================================
+   SHIPMENT ITEM
+   Individual products contained within shipments
+   ========================================================== */
+CREATE TABLE bronze.shipment_item
+(
+    item_id INT,
+    shipment_id INT,
+    product_category VARCHAR(50),
+    quantity INT
+);
+GO
+
+
+/* ==========================================================
+   CLAIM
+   Customer claims for damaged, delayed,
+   lost or stolen shipments
+   ========================================================== */
+CREATE TABLE bronze.claim
+(
+    claim_id INT,
+    shipment_id INT,
+    claim_type VARCHAR(50),
+    claim_amount DECIMAL(18,2),
+    root_cause VARCHAR(255),
+    claim_date VARCHAR(50)
+);
+GO
+
+
+/* ==========================================================
+   DELIVERY EVENT
+   Shipment tracking events
+
+   Examples:
+   Picked Up
+   Arrived Warehouse
+   Customs Clearance
+   Out For Delivery
+   Delivered
+   ========================================================== */
+CREATE TABLE bronze.delivery_event
+(
+    event_id INT,
+    shipment_id INT,
+    event_type VARCHAR(50)
+);
+GO
+
+
+/* ==========================================================
+   FUEL LOG
+   Vehicle fuel consumption records
+   ========================================================== */
+CREATE TABLE bronze.fuel_log
+(
+    fuel_log_id INT,
+    vehicle_id INT,
+    liters DECIMAL(18,2),
+    cost_usd DECIMAL(18,2)
+);
+GO
+
+
+/* ==========================================================
+   INVOICE
+   Customer billing records
+
+   Data may contain:
+   - Negative values
+   - Missing statuses
+   - Invalid dates
+   ========================================================== */
+CREATE TABLE bronze.invoice
+(
+    invoice_id INT,
+    shipment_id INT,
+    amount_usd DECIMAL(18,2),
+    invoice_date VARCHAR(50),
+    invoice_status VARCHAR(50)
+);
+GO
+
+
+/* ==========================================================
+   MAINTENANCE LOG
+   Vehicle repair and maintenance records
+   ========================================================== */
+CREATE TABLE bronze.maintenance_log
+(
+    maintenance_id INT,
+    vehicle_id INT,
+    maintenance_type VARCHAR(50),
+    cost_usd DECIMAL(18,2)
+);
+GO
+
+
+/* ==========================================================
+   PAYMENT
+   Invoice payment records
+
+   Data may contain:
+   - Partial payments
+   - Duplicate payments
+   - Invalid invoice references
+   ========================================================== */
+CREATE TABLE bronze.payment
+(
+    payment_id INT,
+    invoice_id INT,
+    payment_method VARCHAR(50),
+    amount_paid DECIMAL(18,2)
+);
+GO
+
+
+/* ==========================================================
+   RETURN ITEM
+   Reverse logistics and returned shipments
+   ========================================================== */
+CREATE TABLE bronze.return_item
+(
+    return_id INT,
+    shipment_id INT,
+    reason VARCHAR(255),
+    return_date VARCHAR(50)
+);
+GO
+
+
